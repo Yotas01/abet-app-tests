@@ -1,9 +1,7 @@
 package edu.javeriana.abetapptests;
 
-import com.codeborne.selenide.Configuration;
-import com.codeborne.selenide.logevents.SelenideLogger;
 import edu.javeriana.abetapptests.pages.SearchPage;
-import io.qameta.allure.selenide.AllureSelenide;
+import edu.javeriana.abetapptests.pages.SectionReviewPage;
 import org.junit.jupiter.api.*;
 
 import java.time.Duration;
@@ -11,18 +9,12 @@ import java.time.Duration;
 import static com.codeborne.selenide.Condition.text;
 import static com.codeborne.selenide.Selenide.*;
 
-public class SearchPageTest {
+public class SearchPageTest extends BaseTest{
     SearchPage searchPage = new SearchPage();
-
-    @BeforeAll
-    public static void setUpAll() {
-        Configuration.browserSize = "1280x800";
-        SelenideLogger.addListener("allure", new AllureSelenide());
-    }
 
     @BeforeEach
     public void setUp() {
-        open(searchPage.Url);
+        open(searchPage.URL);
     }
 
     @Test
@@ -50,7 +42,25 @@ public class SearchPageTest {
         searchPage.searchButton.click();
 
         //Assert
-        Assertions.assertEquals(searchPage.Url, searchPage.getCurrentUrl());
+        Assertions.assertEquals(searchPage.URL, searchPage.getCurrentUrl());
+    }
+
+    @Test
+    public void searchExistingCourse(){
+        //Arrange
+        String course = "4085", section = "1", semester = "2110";
+        searchPage.courseField.setValue(course);
+        searchPage.sectionField.setValue(section);
+        searchPage.semesterSelect.selectOption(semester);
+
+        //Act
+        searchPage.searchButton.click();
+        SectionReviewPage sectionReviewPage = new SectionReviewPage();
+        String expectedUrl = String.format(sectionReviewPage.URL, course, section, semester);
+        waitForElement(sectionReviewPage.exitButton);
+
+        //Assert
+        Assertions.assertEquals(expectedUrl,sectionReviewPage.getCurrentUrl());
     }
 
 }

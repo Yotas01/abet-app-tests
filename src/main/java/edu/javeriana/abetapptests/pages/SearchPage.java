@@ -8,7 +8,7 @@ import static com.codeborne.selenide.Selenide.$x;
 
 public class SearchPage extends BasePage{
 
-    public String Url = "http://localhost:8080/search";
+    public String URL = baseUrl + "/search";
     public SelenideElement courseField = $x("//*[@id=\"course\"]");
     public SelenideElement sectionField = $x("//*[@id=\"section\"]");
     public SelenideElement semesterSelect = $x("//*[@id=\"semesterSel\"]");

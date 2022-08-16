@@ -1,4 +1,4 @@
-package edu.javeriana.abetapptests;
+package edu.javeriana.abetapptests.e2e;
 
 import com.codeborne.selenide.Configuration;
 import com.codeborne.selenide.logevents.SelenideLogger;

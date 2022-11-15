@@ -108,7 +108,7 @@ public class SearchPageTest extends BaseTest {
     @AfterAll
     public static void cleanUp() throws IOException, InterruptedException {
         SectionController sectionController = new SectionController();
-        sectionController.deleteSection(courseNumber, sectionNumber);
+        sectionController.deleteSection(courseNumber, sectionNumber, 2110);
 
         CourseController courseController = new CourseController();
         courseController.deleteCourse(courseNumber);

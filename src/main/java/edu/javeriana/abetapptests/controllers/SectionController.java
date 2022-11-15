@@ -1,5 +1,7 @@
 package edu.javeriana.abetapptests.controllers;
 
+import org.openqa.selenium.remote.http.HttpMethod;
+
 import java.io.IOException;
 import java.net.URI;
 import java.net.http.HttpRequest;
@@ -15,23 +17,22 @@ public class SectionController extends BaseController{
 
     public HttpResponse<String> createSection(Integer courseNumber, String section) throws IOException, InterruptedException {
         String url = String.format(baseURL,courseNumber);
-        HttpRequest request = HttpRequest.newBuilder()
-                .uri(URI.create(url))
-                .header("Content-Type","application/json")
-                .timeout(timeout)
-                .POST(HttpRequest.BodyPublishers.ofString(section))
-                .build();
-        return client.send(request, HttpResponse.BodyHandlers.ofString());
+        HttpResponse<String> response = client.send(createRequest(url, HttpMethod.POST, section), HttpResponse.BodyHandlers.ofString());
+        System.out.println(response.statusCode() + " " + response.body());
+        return response;
     }
 
-    public HttpResponse<String> deleteSection(Integer courseNumber, Integer sectionNumber) throws IOException, InterruptedException {
-        String url = String.format(baseURL, courseNumber) + "/" + sectionNumber;
-        HttpRequest request = HttpRequest.newBuilder()
-                .uri(URI.create(url))
-                .header("Content-Type","application/json")
-                .timeout(timeout)
-                .DELETE()
-                .build();
-        return client.send(request, HttpResponse.BodyHandlers.ofString());
+    public HttpResponse<String> deleteSection(Integer courseNumber, Integer sectionNumber, Integer semester) throws IOException, InterruptedException {
+        String url = String.format(baseURL,courseNumber).concat("/"+sectionNumber+"/semester"+semester);
+        HttpResponse<String> response = client.send(createRequest(url, HttpMethod.DELETE), HttpResponse.BodyHandlers.ofString());
+        System.out.println(response.statusCode() + " " + response.body());
+        return response;
+    }
+
+    public HttpResponse<String> getSection(Integer courseNumber, Integer sectionNumber, Integer semester) throws IOException, InterruptedException {
+        String url = String.format(baseURL,courseNumber).concat("/"+sectionNumber+"/semester/"+semester);
+        HttpResponse<String> response = client.send(createRequest(url, HttpMethod.GET), HttpResponse.BodyHandlers.ofString());
+        System.out.println(response.statusCode() + " " + response.body());
+        return response;
     }
 }

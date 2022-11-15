@@ -1,5 +1,7 @@
 package edu.javeriana.abetapptests.controllers;
 
+import edu.javeriana.abetapptests.common.Mapper;
+import edu.javeriana.abetapptests.entities.ValueDTO;
 import org.openqa.selenium.remote.http.HttpMethod;
 
 import java.io.IOException;
@@ -31,6 +33,29 @@ public class CourseController extends BaseController{
     public HttpResponse<String> deleteCourse(Integer courseNumber) throws IOException, InterruptedException {
         String url = baseURL+"/"+courseNumber;
         HttpResponse<String> response = client.send(createRequest(url, HttpMethod.DELETE), HttpResponse.BodyHandlers.ofString());
+        System.out.println(response.statusCode() + " " + response.body());
+        return response;
+    }
+
+    public HttpResponse<String> addCdiotoCourse(Integer courseNumber, Float cdioNumber, Integer bloomValue) throws IOException, InterruptedException {
+        String url = baseURL + "/" + courseNumber + "/cdio/" + cdioNumber;
+        String json = Mapper.parseToJson(new ValueDTO(bloomValue));
+        HttpResponse<String> response = client.send(createRequest(url, HttpMethod.POST, json), HttpResponse.BodyHandlers.ofString());
+        System.out.println(response.statusCode() + " " + response.body());
+        return response;
+    }
+
+    public HttpResponse<String> removeCdioFromCourse(Integer courseNumber, Float cdioNumber) throws IOException, InterruptedException {
+        String url = baseURL + "/" + courseNumber + "/cdio/" + cdioNumber;
+        HttpResponse<String> response = client.send(createRequest(url, HttpMethod.DELETE), HttpResponse.BodyHandlers.ofString());
+        System.out.println(response.statusCode() + " " + response.body());
+        return response;
+    }
+
+    public HttpResponse<String> updateBloomValue(Integer courseNumber, Float cdioNumber, Integer bloomValue) throws IOException, InterruptedException {
+        String url = baseURL + "/" + courseNumber + "/cdio/" + cdioNumber;
+        String json = Mapper.parseToJson(new ValueDTO(bloomValue));
+        HttpResponse<String> response = client.send(createRequest(url, HttpMethod.valueOf("PUT") , json), HttpResponse.BodyHandlers.ofString());
         System.out.println(response.statusCode() + " " + response.body());
         return response;
     }

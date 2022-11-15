@@ -8,6 +8,9 @@ public class CDIODTO {
     private List<Integer> outcomes;
     private List<String> courses;
 
+    public String createJsonRequiredFields(){
+        return "{\"number\":"+this.number+",\"description\":\""+this.description+"\"}";
+    }
 
     public CDIODTO() {
     }

@@ -12,6 +12,10 @@ import java.time.Duration;
 public class BaseController {
     protected HttpClient client = HttpClient.newHttpClient();
     protected Duration timeout = Duration.ofSeconds(10);
+
+    public static final String ANSI_RESET = "\u001B[0m";
+    public static final String ANSI_BLUE = "\u001B[34m";
+
     protected String getBaseURL(){
         return "http://localhost:8090";
     }
@@ -23,7 +27,7 @@ public class BaseController {
                 .timeout(timeout)
                 .method(method.name(), HttpRequest.BodyPublishers.noBody())
                 .build();
-        System.out.println(request.uri() + " " + request.method());
+        System.out.println( ANSI_BLUE + request.uri() + " " + request.method() + ANSI_RESET);
         return request;
     }
 
@@ -34,7 +38,7 @@ public class BaseController {
                 .timeout(timeout)
                 .method(method.name(), HttpRequest.BodyPublishers.ofString(body))
                 .build();
-        System.out.println(request.uri() + " " + request.method() + ": " + body);
+        System.out.println(ANSI_BLUE + request.uri() + " " + request.method() + ": " + body + ANSI_RESET);
         return request;
     }
 }

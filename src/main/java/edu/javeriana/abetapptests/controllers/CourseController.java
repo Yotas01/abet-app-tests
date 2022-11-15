@@ -1,5 +1,7 @@
 package edu.javeriana.abetapptests.controllers;
 
+import org.openqa.selenium.remote.http.HttpMethod;
+
 import java.io.IOException;
 import java.net.URI;
 import java.net.http.HttpRequest;
@@ -14,32 +16,22 @@ public class CourseController extends BaseController{
     }
 
     public HttpResponse<String> getCourse(Integer courseNumber) throws IOException, InterruptedException {
-        HttpRequest request = HttpRequest.newBuilder()
-                .uri(URI.create(baseURL + "/" + courseNumber.toString()))
-                .header("Content-Type","application/json")
-                .timeout(timeout)
-                .GET()
-                .build();
-        return client.send(request, HttpResponse.BodyHandlers.ofString());
+        String url = baseURL+"/"+courseNumber;
+        HttpResponse<String> response = client.send(createRequest(url, HttpMethod.GET), HttpResponse.BodyHandlers.ofString());
+        System.out.println(response.statusCode() + " " + response.body());
+        return response;
     }
 
     public HttpResponse<String> createCourse(String course) throws IOException, InterruptedException {
-        HttpRequest request = HttpRequest.newBuilder()
-                .uri(URI.create(baseURL))
-                .header("Content-Type","application/json")
-                .timeout(timeout)
-                .POST(HttpRequest.BodyPublishers.ofString(course))
-                .build();
-        return client.send(request, HttpResponse.BodyHandlers.ofString());
+        HttpResponse<String> response = client.send(createRequest(baseURL, HttpMethod.POST, course), HttpResponse.BodyHandlers.ofString());
+        System.out.println(response.statusCode() + " " + response.body());
+        return response;
     }
 
     public HttpResponse<String> deleteCourse(Integer courseNumber) throws IOException, InterruptedException {
-        HttpRequest request = HttpRequest.newBuilder()
-                .uri(URI.create(baseURL+"/"+courseNumber))
-                .header("Content-Type","application/json")
-                .timeout(timeout)
-                .DELETE()
-                .build();
-        return client.send(request, HttpResponse.BodyHandlers.ofString());
+        String url = baseURL+"/"+courseNumber;
+        HttpResponse<String> response = client.send(createRequest(url, HttpMethod.DELETE), HttpResponse.BodyHandlers.ofString());
+        System.out.println(response.statusCode() + " " + response.body());
+        return response;
     }
 }

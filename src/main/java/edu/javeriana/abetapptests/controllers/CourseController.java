@@ -5,8 +5,6 @@ import edu.javeriana.abetapptests.entities.ValueDTO;
 import org.openqa.selenium.remote.http.HttpMethod;
 
 import java.io.IOException;
-import java.net.URI;
-import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 
 public class CourseController extends BaseController{
@@ -37,7 +35,7 @@ public class CourseController extends BaseController{
         return response;
     }
 
-    public HttpResponse<String> addCdiotoCourse(Integer courseNumber, Float cdioNumber, Integer bloomValue) throws IOException, InterruptedException {
+    public HttpResponse<String> addCdioToCourse(Integer courseNumber, Float cdioNumber, Integer bloomValue) throws IOException, InterruptedException {
         String url = baseURL + "/" + courseNumber + "/cdio/" + cdioNumber;
         String json = Mapper.parseToJson(new ValueDTO(bloomValue));
         HttpResponse<String> response = client.send(createRequest(url, HttpMethod.POST, json), HttpResponse.BodyHandlers.ofString());

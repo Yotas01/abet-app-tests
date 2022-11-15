@@ -98,7 +98,7 @@ public class CourseTests {
         Integer bloomValue = 3;
 
         //Act
-        HttpResponse<String> response = courseController.addCdiotoCourse(courseNumber, cdioNumber, bloomValue);
+        HttpResponse<String> response = courseController.addCdioToCourse(courseNumber, cdioNumber, bloomValue);
 
         //Assert
         Assertions.assertEquals(HttpStatus.SC_OK, response.statusCode());
@@ -111,7 +111,7 @@ public class CourseTests {
         Float wrongCdioNumber = 0f;
 
         //Act
-        HttpResponse<String> response = courseController.addCdiotoCourse(courseNumber, wrongCdioNumber, bloomValue);
+        HttpResponse<String> response = courseController.addCdioToCourse(courseNumber, wrongCdioNumber, bloomValue);
 
         //Assert
         Assertions.assertEquals(HttpStatus.SC_NOT_FOUND, response.statusCode());

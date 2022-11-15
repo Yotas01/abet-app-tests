@@ -6,8 +6,6 @@ import edu.javeriana.abetapptests.controllers.CourseController;
 import edu.javeriana.abetapptests.entities.CDIODTO;
 import edu.javeriana.abetapptests.entities.CourseDTO;
 import org.apache.hc.core5.http.HttpStatus;
-import org.junit.AfterClass;
-import org.junit.BeforeClass;
 import org.junit.jupiter.api.*;
 
 import java.io.IOException;
@@ -21,7 +19,7 @@ public class CourseTests {
     private static final String courseName = "Test course";
     private static final Float cdioNumber = 1.1f;
 
-    @BeforeClass
+    @BeforeAll
     public static void setUp() throws IOException, InterruptedException {
         CDIODTO cdio = new CDIODTO();
         cdio.setNumber(cdioNumber);
@@ -140,7 +138,7 @@ public class CourseTests {
         Assertions.assertEquals(HttpStatus.SC_NOT_FOUND, response.statusCode());
     }
 
-    @AfterClass
+    @AfterAll
     public static void cleanUp() throws IOException, InterruptedException {
         courseController.deleteCourse(courseNumber);
         cdioController.deleteCdio(cdioNumber);

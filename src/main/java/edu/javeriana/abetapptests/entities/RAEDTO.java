@@ -55,4 +55,8 @@ public class RAEDTO {
     public void setCourseId(Long courseId) {
         this.courseId = courseId;
     }
+
+    public String createJsonRequiredFields() {
+        return "{\"description\":\""+this.description+"\"}";
+    }
 }
